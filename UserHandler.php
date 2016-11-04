@@ -19,13 +19,15 @@
         Email, 
         Password,
         PhoneNumber,
-        Company
+        Company,
+        BirthDate
       ) VALUES (
         :name, 
         :email,
         :pass,
         :phone,
-        :company
+        :company,
+        :birthdate
       )";
 
       $name = $user->getName();
@@ -33,6 +35,7 @@
       $pass = $user->getPassword();
       $phone = $user->getPhoneNumber();
       $company = $user->getCompany();
+      $birth = $user->getBirthDate();
 
       $statement = $this->db->prepare($query);
       $statement->bindParam(':name', $name);
@@ -40,6 +43,7 @@
       $statement->bindParam(':pass', $pass);
       $statement->bindParam(':phone', $phone);
       $statement->bindParam(':company', $company);
+      $statement->bindParam(':birthdate', $birth);
 
       return $this->db->executeStatement($statement);
     }

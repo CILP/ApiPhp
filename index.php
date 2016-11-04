@@ -9,50 +9,30 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-      /*require('db.php');
-
-      
-      $config = parse_ini_file('config.ini', true);
-
-      $servername = $config['development']['host'];
-      $dbname = $config['development']['database'];
-      $username = $config['development']['user'];
-      $password = $config['development']['password'];
-
-      
-      $context = new DB("mysql:host=$servername;dbname=$dbname", $username, $password);
-      */
-
       require('model/user.php');
       require('UserHandler.php');
 
       $userHandler = new UserHandler();
+
+      echo $_POST['birthdate'] . '\n';
 
       $user = new User(
         $_POST['name'], 
         $_POST['email'],
         $_POST['pass'],
         $_POST['phone'],
-        $_POST['company']
+        $_POST['company'],
+        $_POST['birthdate']
       );
 
       $message = $userHandler->Create($user);
 
-     /*$message = $context->addUser(
-        $_POST['name'], 
-        $_POST['email'],
-        $_POST['pass'],
-        $_POST['phone'],
-        $_POST['company']
-      );*/
-
       $msg = json_encode(
         array(
-          'message' => $message
+          'message' => $message,
+          'birth' => $user->getBirthDate()
         )
       );
-
-      // unset($context);
       
     } else {
       $msg = $_SERVER['REQUEST_METHOD'] . $_SERVER['PATH_INFO'];

@@ -7,14 +7,17 @@
     private $password;
     private $phoneNumber;
     private $company;
+    private $birthdate;
 
-    public function __construct($name, $email, $password, $phoneNumber, $company){
+    public function __construct($name, $email, $password, $phoneNumber, $company, $birthdate){
 
       $this->name = $name;
       $this->email = $email;
       $this->password = $password;
       $this->phoneNumber = $phoneNumber;
-      $this->company = isset($company) ? $company : 'NULL'; 
+      $this->company = isset($company) ? $company : 'NULL';
+
+      $this->setBirthDate($birthdate);
     }
 
     # Getters
@@ -38,6 +41,10 @@
       return $this->company;
     }
 
+    public function getBirthDate(){
+      return $this->birthdate;
+    }
+
     # Setters
     public function setName($name){
       $this->name = $name;
@@ -57,5 +64,11 @@
 
     public function setCompany($company){
       $this->company = $company;
+    }
+
+    public function setBirthDate($birthdate){
+
+      $birthpart = explode("/", $birthdate);
+      $this->birthdate = $birthdate ? $birthpart[2] . '-' . $birthpart[0] . '-' . $birthpart[1] : 'NULL';
     }
   }

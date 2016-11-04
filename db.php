@@ -87,7 +87,7 @@
         if ($ex->errorInfo[1] == 1062){
           $msg = "Error Duplicated";
         } else {
-          $msg = "Error";
+          $msg = $ex->getMessage();
         }
       }
 
