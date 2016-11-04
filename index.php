@@ -9,10 +9,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-      require('db.php');
+      /*require('db.php');
 
       
-      $config = parse_ini_file("config.ini", true);
+      $config = parse_ini_file('config.ini', true);
 
       $servername = $config['development']['host'];
       $dbname = $config['development']['database'];
@@ -21,8 +21,14 @@
 
       
       $context = new DB("mysql:host=$servername;dbname=$dbname", $username, $password);
+      */
 
-      $message = $context->addUser(
+      require('model/user.php');
+      require('UserHandler.php');
+
+      $userHandler = new UserHandler();
+
+      $user = new User(
         $_POST['name'], 
         $_POST['email'],
         $_POST['pass'],
@@ -30,13 +36,23 @@
         $_POST['company']
       );
 
+      $message = $userHandler->Create($user);
+
+     /*$message = $context->addUser(
+        $_POST['name'], 
+        $_POST['email'],
+        $_POST['pass'],
+        $_POST['phone'],
+        $_POST['company']
+      );*/
+
       $msg = json_encode(
         array(
           'message' => $message
         )
       );
 
-      unset($context);
+      // unset($context);
       
     } else {
       $msg = $_SERVER['REQUEST_METHOD'] . $_SERVER['PATH_INFO'];
@@ -45,9 +61,9 @@
     http_response_code(200);
   }
 
-  $head = file_get_contents("views/header.html");
-  $foot = file_get_contents("views/footer.html");
-  $main = file_get_contents("views/main.html");
-  $form = file_get_contents("views/form.html");
+  $head = file_get_contents('views/header.html');
+  $foot = file_get_contents('views/footer.html');
+  $main = file_get_contents('views/main.html');
+  $form = file_get_contents('views/form.html');
 
   echo $head . $main . "<p><b>$msg</b></p>". $form . $foot;

@@ -1,6 +1,6 @@
 <?php
 
-  require('db.php');
+  /*require('db.php');
 
   $config = parse_ini_file("config.ini", true);
 
@@ -27,4 +27,21 @@
 
   echo $msg;
   
-  unset($context);
+  unset($context);*/
+
+  require('model/user.php');
+      require('UserHandler.php');
+
+      $userHandler = new UserHandler();
+
+      $user = new User(
+        "Carlos", 
+        "cilp2912@gmail.com",
+        "tierra1.",
+        "3338428732",
+        "NA"
+      );
+
+      $message = $userHandler->Create($user);
+
+      echo json_encode(array('message' => $message));

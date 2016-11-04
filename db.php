@@ -3,7 +3,7 @@
   class DB extends PDO {
 
     #make a connection
-    public function __construct($dns, $username, $password)
+    /*public function __construct($dns, $username, $password)
     {
         parent::__construct($dns, $username, $password);
 
@@ -15,6 +15,34 @@
         {
             die($ex->getMessage());
         }
+    }*/
+
+    private function loadConfiguartion($environment){
+
+      $config = parse_ini_file('config.ini', true);
+      return $config[$environment];
+    }
+
+    public function __construct($environment)
+    {   
+      $config = $this->loadConfiguartion($environment);
+      $host = $config['host'];
+      $dbname = $config['database'];
+      $user = $config['user'];
+      $pass = $config['password'];
+
+      print_r($config);
+
+      parent::__construct("mysql:host=$host;dbname=$dbname", $user, $pass);
+
+      try 
+      { 
+          $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+      }
+      catch (PDOException $ex) 
+      {
+          die($ex->getMessage());
+      }
     }
 
     public function addUser($name, $email, $pass, $phone, $company){
@@ -47,17 +75,19 @@
       return $this->executeStatement($statement);
     }
 
-    private function executeStatement($s){
+    public function executeStatement($s){
 
       $msg = "";
 
       try {
         $s->execute();
-        $msg = "User added successfully";
+        $msg = "Success";
       } catch(PDOException $ex){
         
         if ($ex->errorInfo[1] == 1062){
-          $msg = "Can't add user, Duplicated Email";
+          $msg = "Error Duplicated";
+        } else {
+          $msg = "Error";
         }
       }
 
