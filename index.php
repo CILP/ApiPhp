@@ -1,22 +1,5 @@
 <?php 
 
-  /*require('db.php');
-
-  echo "Hola Mundo\n";
-
-  $config = parse_ini_file("config.ini", true);
-  echo $config['development']['host'] . "\n";
-
-  $servername = $config['development']['host'];
-  $dbname = $config['development']['database'];
-  $username = $config['development']['user'];
-  $password = $config['development']['password'];
-
-  $context = new DB("mysql:host=$servername;dbname=$dbname", $username, $password);
-  $context->addUser('Prueba', 'mail@mail.com');
-  
-  unset($context);*/
-
   $msg = "";
 
   if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
@@ -26,20 +9,39 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+      require('db.php');
+
+      
+      $config = parse_ini_file("config.ini", true);
+
+      $servername = $config['development']['host'];
+      $dbname = $config['development']['database'];
+      $username = $config['development']['user'];
+      $password = $config['development']['password'];
+
+      
+      $context = new DB("mysql:host=$servername;dbname=$dbname", $username, $password);
+
+      $message = $context->addUser(
+        $_POST['name'], 
+        $_POST['email'],
+        $_POST['pass'],
+        $_POST['phone'],
+        $_POST['company']
+      );
+
       $msg = json_encode(
         array(
-          'name' => $_POST['name'],
-          'email' => $_POST['email'],
-          'password' => $_POST['pass'],
-          'phone' => $_POST['phone'],
-          'company' => $_POST['company'],
+          'message' => $message
         )
       );
+
+      unset($context);
+      
     } else {
       $msg = $_SERVER['REQUEST_METHOD'] . $_SERVER['PATH_INFO'];
     }
 
-   
     http_response_code(200);
   }
 
