@@ -1,6 +1,6 @@
 <?php 
 
-  require('db.php');
+  /*require('db.php');
 
   echo "Hola Mundo\n";
 
@@ -15,4 +15,10 @@
   $context = new DB("mysql:host=$servername;dbname=$dbname", $username, $password);
   $context->addUser('Prueba', 'mail@mail.com');
   
-  unset($context);
+  unset($context);*/
+
+  $head = file_get_contents("views/header.html");
+  $foot = file_get_contents("views/footer.html");
+  $main = file_get_contents("views/main.html");
+
+  echo $head . $main . $foot;
