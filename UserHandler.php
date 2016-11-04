@@ -48,14 +48,25 @@
       return $this->db->executeStatement($statement);
     }
 
-    public function ReadOne($user){
+    public function ReadOne($email){
 
       $query = "SELECT * FROM user WHERE Email = ':email'"; 
       $statement = $this->db->prepare($query);
 
-      $statement->bindParam(':email', $user->getEmail());
+      //$statement->bindParam(':email', $email);
+      $statement->execute(array('email' => $email));
 
-      return $this->db->executeStatement($statement);
+      //$this->db->executeStatement($statement);
+
+      $result = $statement->fetchAll();
+
+      foreach ($result as $row) {
+        echo $row["Id"];
+      }
+
+      //print_r($result);
+
+      return $result;
     }
 
     public function ReadAll(){

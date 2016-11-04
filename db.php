@@ -31,8 +31,6 @@
       $user = $config['user'];
       $pass = $config['password'];
 
-      print_r($config);
-
       parent::__construct("mysql:host=$host;dbname=$dbname", $user, $pass);
 
       try 

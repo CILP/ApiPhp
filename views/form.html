@@ -1,34 +1,39 @@
 <div>
-  <form action="index.php" method="POST">
+  <form action="index.php" method="POST" id="userForm" name="userForm">
 
-    <label for="name">Name*</label>
-    <input type="text" id="name" name="name" placeholder="Type your name..." />
+    <div class="form-group">
+      <label for="name">Name*</label>
+      <input class="form-control" type="text" id="name" name="name" placeholder="Type your name..." />
+    </div>
 
-    <br />
+    <div class="form-group">
+      <label for="email">Email*</label>
+      <input class="form-control" type="email" id="email" name="email" placeholder="example@example.com" />
+    </div>
 
-    <label for="email">Email*</label>
-    <input type="email" id="email" name="email" placeholder="example@example.com" />
-    
-    <br />
+    <div class="form-group">
+      <label for="pass">Password*</label>
+      <input class="form-control" type="password" id="pass" name="pass" />
+    </div>
+   
+    <div class="form-group">
+      <label for="phone">Phone number*</label>
+      <input class="form-control" type="number" id="phone" name="phone" />
+    </div>
 
-    <label for="pass">Password*</label>
-    <input type="password" id="pass" name="pass" />
-    
-    <br />
+    <div class="form-group">
+      <label for="company">Company</label>
+      <input class="form-control" type="text" id="company" name="company" />
+    </div>
+ 
+    <div class="form-group">
+      <label for="birthdate">Birthdate*</label>
+      <input class="form-control" type="text" id="birthdate" name="birthdate" placeholder="Birthdate">
+    </div>
 
-    <label for="phone">Phone number*</label>
-    <input type="number" id="phone" name="phone" />
+    <div class="form-group">
+      <input class="btn btn-primary" id="btnSubmit" name="btnSubmit" type="submit" value="Enviar" />
+    </div>
 
-    <br />
-
-    <label for="company">Company</label>
-    <input type="text" id="company" name="company" />
-
-    <br />
-
-    <label for="birthdate">Birthdate</label>
-    <input type="text" id="birthdate" name="birthdate" placeholder="Birthdate">
-
-    <input type="submit" value="Enviar" />
   </form>
 </div>

@@ -3,7 +3,8 @@
   $msg = "";
 
   if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
-    http_response_code(404);
+    header('HTTP/1.0 401 Unauthorized');
+    http_response_code(401);
     exit;
   } else {
 
@@ -13,8 +14,6 @@
       require('UserHandler.php');
 
       $userHandler = new UserHandler();
-
-      echo $_POST['birthdate'] . '\n';
 
       $user = new User(
         $_POST['name'], 
@@ -27,15 +26,12 @@
 
       $message = $userHandler->Create($user);
 
-      $msg = json_encode(
-        array(
-          'message' => $message,
-          'birth' => $user->getBirthDate()
-        )
-      );
+      if ($message == 'Success'){
+        $msg = "<div class='form-group has-success'>" . "<label class='control-label' for='#'>User added Successfully</label>" . "</div>";
+      } else {
+        $msg = "<div class='form-group has-error'>" . "<label class='control-label' for='#'>Duplicated User</label>" . "</div>";
+      }
       
-    } else {
-      $msg = $_SERVER['REQUEST_METHOD'] . $_SERVER['PATH_INFO'];
     }
 
     http_response_code(200);
