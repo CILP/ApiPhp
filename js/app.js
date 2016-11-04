@@ -14,7 +14,7 @@ function init(){
         birth = document.getElementById('birthdate').value;
 
     if (!name || !email || !pass || !birth || !phone){
-      alert("Its necessary to complete tehe form to add a new user :)");
+      alert("Its necessary to complete the form to add a new user :)");
       return;
     } else {
       form.submit();
